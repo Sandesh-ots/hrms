@@ -27,6 +27,8 @@ def get_columns(leave_types):
 	for leave_type in leave_types:
 		columns.append(_(leave_type) + ":Float:160")
 
+	columns.append(_("Total Leaves Available") + ":Float:160")
+
 	return columns
 
 
@@ -57,6 +59,7 @@ def get_data(filters, leave_types):
 	for employee in active_employees:
 		row = [employee.name, employee.employee_name, employee.department]
 		available_leave = get_leave_details(employee.name, filters.date)
+		total_leaves = 0
 		for leave_type in leave_types:
 			remaining = 0
 			if leave_type in available_leave["leave_allocation"]:
@@ -64,7 +67,9 @@ def get_data(filters, leave_types):
 				remaining = available_leave["leave_allocation"][leave_type]["remaining_leaves"]
 
 			row += [remaining]
+			total_leaves += remaining
 
+		row += [total_leaves]
 		data.append(row)
 
 	return data

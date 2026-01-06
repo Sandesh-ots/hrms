@@ -17,6 +17,43 @@ frappe.ui.form.on("Job Applicant", {
 		});
 		frm.events.create_custom_buttons(frm);
 		frm.events.make_dashboard(frm);
+    	if (frm.doc.status === 'Accepted'){
+			frm.add_custom_button('Send Internship Details', function(){
+						let d = new frappe.ui.Dialog({
+							title: 'Send Internship Details',
+							fields: [
+								{
+									label: 'Details',
+									fieldname: 'details',
+									fieldtype: 'Small Text',
+									reqd: true
+								}
+							],
+							primary_action_label: 'Send Mail',
+							primary_action(values){
+								frappe.call({
+							method : "hrms.hr.doctype.job_applicant.job_applicant.send_internship_details",
+							args:{
+								job_applicant: frm.doc.name,
+								data: values.details
+							},
+							callback: function(r){
+								if(!r.exc){
+									frappe.msgprint('Internship Details Sent !');
+									d.hide();
+									
+									if (frm.doc.job_application) {
+										frappe.set_route('Form', 'Job Application', frm.doc.job_application);
+									}
+								}
+							}
+						});
+					}
+				});
+				d.show();
+				
+			});
+		}
 	},
 
 	create_custom_buttons: function (frm) {

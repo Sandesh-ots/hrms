@@ -3,6 +3,11 @@
 
 frappe.ui.form.on("Goal", {
 	refresh(frm) {
+    	let today_date = frappe.datetime.str_to_obj(frappe.datetime.get_today());
+        let final_end_date = frappe.datetime.add_days(today_date, 15);
+        if (frappe.session.user === frm.doc.user && frm.doc.end_date <= final_end_date) {
+            frm.disable_form();
+        }
 		frm.trigger("set_filters");
 		frm.trigger("add_custom_buttons");
 

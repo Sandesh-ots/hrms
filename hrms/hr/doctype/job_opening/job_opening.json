@@ -13,11 +13,14 @@
   "job_opening_template",
   "job_title",
   "designation",
+  "vacancies",
   "column_break_5",
   "status",
   "posted_on",
   "closes_on",
   "closed_on",
+  "section_break_abib",
+  "required_skills",
   "section_break_nngy",
   "company",
   "department",
@@ -28,7 +31,6 @@
   "staffing_plan",
   "planned_vacancies",
   "job_requisition",
-  "vacancies",
   "section_break_6",
   "publish",
   "route",
@@ -187,12 +189,9 @@
    "read_only": 1
   },
   {
-   "depends_on": "job_requisition",
-   "fetch_from": "job_requisition.no_of_positions",
    "fieldname": "vacancies",
    "fieldtype": "Int",
-   "label": "Vacancies",
-   "read_only": 1
+   "label": "Vacancies"
   },
   {
    "default": "Now",
@@ -254,10 +253,21 @@
    "label": "Publish Applications Received"
   },
   {
+<<<<<<< Updated upstream
    "fieldname": "job_opening_template",
    "fieldtype": "Link",
    "label": "Job Opening Template",
    "options": "Job Opening Template"
+=======
+   "fieldname": "section_break_abib",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "required_skills",
+   "fieldtype": "Table",
+   "label": "Required Skills",
+   "options": "Skills Required"
+>>>>>>> Stashed changes
   }
  ],
  "has_web_view": 1,
@@ -265,7 +275,11 @@
  "idx": 1,
  "is_published_field": "publish",
  "links": [],
+<<<<<<< Updated upstream
  "modified": "2025-12-11 19:18:36.145062",
+=======
+ "modified": "2025-11-12 11:01:30.430216",
+>>>>>>> Stashed changes
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Job Opening",
@@ -285,7 +299,11 @@
   }
  ],
  "row_format": "Dynamic",
+<<<<<<< Updated upstream
  "sort_field": "creation",
+=======
+ "sort_field": "modified",
+>>>>>>> Stashed changes
  "sort_order": "ASC",
  "states": [
   {

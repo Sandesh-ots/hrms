@@ -3,7 +3,7 @@
 
 
 import datetime
-
+	
 import frappe
 from frappe import _
 from frappe.model.document import Document
@@ -80,6 +80,112 @@ class Interview(Document):
 		status_map = {"Cleared": "Accepted", "Rejected": "Rejected"}
 		return status_map.get(self.status, None)
 
+	def after_insert(self):
+		if self.custom_mode == "ONLINE":
+			subject = f"Interview Scheduled – {self.interview_round}"
+			message = f"""
+            <b>Ortusolis Technology Services LLP</b><br><br>
+			Dear {self.job_applicant},<br><br>
+	        
+	        Please find the details for the upcoming interview:<br><br>
+	        
+	        <b>Interview Details:</b><br>
+	        <b>Candidate Name:</b> {self.job_applicant}<br>
+	        <b>Scheduled On:</b> {self.scheduled_on}<br>
+	        <b>Time:</b> {self.from_time[:5]} to {self.to_time[:5]}<br>
+	        <b>Mode:</b> {self.custom_mode}<br><br>
+	        <b>Meeting Link:</b><br>
+	        {self.custom_link}<br><br>
+	        
+	        ALL THE BEST !!!
+			"""
+
+			frappe.sendmail(
+				recipients = self.job_applicant,
+				subject = subject,
+				message = message
+				)
+			
+		else:
+			subject = f"Interview Scheduled – {self.interview_round}"
+			message = f"""
+            <b>Ortusolis Technology Services LLP</b><br><br>
+			Dear {self.job_applicant},<br><br>
+	        
+	        Please find the details for the upcoming interview:<br><br>
+	        
+	        <b>Interview Details:</b><br>
+	        <b>Candidate Name:</b> {self.job_applicant}<br>
+	        <b>Scheduled On:</b> {self.scheduled_on}<br>
+	        <b>Time:</b> {self.from_time[:5]} to {self.to_time[:5]}<br>
+	        <b>Mode:</b> {self.custom_mode}<br><br>
+	        <b>Address:</b><br>
+	        77, 6th Cross Rd, Further Extension, Mahalakshmi Layout, Bengaluru, Karnataka 560086<br><br>
+	        
+	        ALL THE BEST !!!
+			"""
+
+			frappe.sendmail(
+				recipients = self.job_applicant,
+				subject = subject,
+				message = message
+				)
+		
+		
+		recipients = get_recipients(self.name)
+		if self.job_applicant in recipients:
+			recipients.remove(self.job_applicant)
+
+		if self.custom_mode == "ONLINE":
+			subject = f"Interview Scheduled – {self.interview_round}"
+			message = f"""
+			Dear Interviewer,<br><br>
+	        
+	        Please find the details for the upcoming interview:<br><br>
+	        
+	        <b>Interview Details:</b><br>
+            <b>Interview Id:</b> {self.name}<br>
+	        <b>Candidate Name:</b> {self.job_applicant}<br>
+	        <b>Scheduled On:</b> {self.scheduled_on}<br>
+	        <b>Time:</b> {self.from_time[:5]} to {self.to_time[:5]}<br>
+	        <b>Mode:</b> {self.custom_mode}<br><br>
+	        <b>Meeting Link:</b><br> 
+	        {self.custom_link}<br><br>
+	        
+	        Please conduct the interview for the above candidate and give the feedback.<br>
+	        Contact HR for any further clarifications.
+			"""
+
+			frappe.sendmail(
+				recipients = recipients,
+				subject = subject,
+				message = message
+				) 
+
+		else:
+			subject = f"Interview Scheduled – {self.interview_round}"
+			message = f"""
+			Dear Interviewer,<br><br>
+	        
+	        Please find the details for the upcoming interview:<br><br>
+	        
+	        <b>Interview Details:</b><br>
+            <b>Interview Id:</b> {self.name}<br>
+	        <b>Candidate Name:</b> {self.job_applicant}<br>
+	        <b>Scheduled On:</b> {self.scheduled_on}<br>
+	        <b>Time:</b> {self.from_time[:5]} to {self.to_time[:5]}<br>
+	        <b>Mode:</b> {self.custom_mode}<br><br>
+	        
+	        Please conduct the interview for the above candidate and give the feedback.<br>
+	        Contact HR for any further clarifications.
+			"""
+
+			frappe.sendmail(
+				recipients = recipients,
+				subject = subject,
+				message = message
+				) 
+
 	@frappe.whitelist()
 	def reschedule_interview(self, scheduled_on, from_time, to_time):
 		if scheduled_on == self.scheduled_on and from_time == self.from_time and to_time == self.to_time:
@@ -103,11 +209,11 @@ class Interview(Document):
 				subject=_("Interview: {0} Rescheduled").format(self.name),
 				message=_("Your Interview session is rescheduled from {0} {1} - {2} to {3} {4} - {5}").format(
 					original_date,
-					original_from_time,
-					original_to_time,
+					original_from_time[:5],
+					original_to_time[:5],
 					self.scheduled_on,
-					self.from_time,
-					self.to_time,
+					self.from_time[:5],
+					self.to_time[:5],
 				),
 				reference_doctype=self.doctype,
 				reference_name=self.name,

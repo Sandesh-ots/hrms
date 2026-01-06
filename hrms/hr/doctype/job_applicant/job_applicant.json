@@ -19,6 +19,7 @@
   "job_title",
   "designation",
   "status",
+  "year_of_experience",
   "source_and_rating_section",
   "source",
   "source_name",
@@ -32,6 +33,7 @@
   "resume_link",
   "section_break_16",
   "currency",
+  "expected_ctc",
   "column_break_18",
   "lower_range",
   "upper_range"
@@ -189,13 +191,23 @@
    "fieldtype": "Link",
    "label": "Designation",
    "options": "Designation"
+  },
+  {
+   "fieldname": "expected_ctc",
+   "fieldtype": "Data",
+   "label": "Expected CTC"
+  },
+  {
+   "fieldname": "year_of_experience",
+   "fieldtype": "Data",
+   "label": "Year of Experience"
   }
  ],
  "icon": "fa fa-user",
  "idx": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-16 13:06:05.312255",
+ "modified": "2025-11-12 10:52:25.046420",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Job Applicant",
@@ -214,6 +226,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "search_fields": "applicant_name, email_id, job_title, phone_number",
  "sender_field": "email_id",
  "sort_field": "modified",

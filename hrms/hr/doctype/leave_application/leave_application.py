@@ -72,6 +72,17 @@ class LeaveApplication(Document, PWANotificationsMixin):
 	def after_insert(self):
 		self.notify_approver()
 
+	def before_save(self):
+		if frappe.session.user != "Administrator":
+			if isinstance(self.from_date, str):
+				from_date = datetime.datetime.strptime(self.from_date, "%Y-%m-%d").date()
+			else:
+				from_date = self.from_date
+			today = datetime.datetime.strptime(frappe.utils.today(), "%Y-%m-%d").date()
+			date_diff = (from_date - today).days
+			if date_diff < 0:
+				frappe.throw(_("You cannot apply leave application for any back dates"))
+
 	def validate(self):
 		validate_active_employee(self.employee)
 		set_employee_name(self)
@@ -99,11 +110,22 @@ class LeaveApplication(Document, PWANotificationsMixin):
 		self.notify_approval_status()
 
 	def on_submit(self):
+		# 1. Check for Self-Approval
+		current_user_employee_id = frappe.db.get_value("Employee", {"user_id": frappe.session.user}, "name")
+
+		if current_user_employee_id and self.employee == current_user_employee_id:
+			frappe.throw(_("You cannot approve or reject your own leave application"))
+
+		# 2. Standard Status Check
 		if self.status in ["Open", "Cancelled"]:
 			frappe.throw(_("Only Leave Applications with status 'Approved' and 'Rejected' can be submitted"))
 
+		# 3. Existing Validations
 		self.validate_back_dated_application()
 		self.update_attendance()
+		
+		# Note: You can remove self.validate_for_self_approval() if you want 
+		# the code above to be the only check, otherwise keep it as a backup.
 		self.validate_for_self_approval()
 
 		# notify leave applier about approval
@@ -114,6 +136,12 @@ class LeaveApplication(Document, PWANotificationsMixin):
 		self.reload()
 
 	def before_cancel(self):
+		# 1. Check for Self-Revocation
+		current_user_employee_id = frappe.db.get_value("Employee", {"user_id": frappe.session.user}, "name")
+		
+		if current_user_employee_id and self.employee == current_user_employee_id:
+			frappe.throw(_("You cannot revoke your own leave application"))
+			
 		self.status = "Cancelled"
 
 	def on_cancel(self):

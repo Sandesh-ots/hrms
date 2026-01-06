@@ -1,0 +1,64 @@
+[
+ {
+  "add_total_row": 0,
+  "add_translate_data": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2025-08-04 15:08:05.252405",
+  "module": "HR",
+  "name": "WFH Reports",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Work From Home Application",
+  "reference_report": null,
+  "report_name": "WFH Reports",
+  "report_script": "#",
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "WFH Reports",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR Manager"
+   },
+   {
+    "parent": "WFH Reports",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Employee"
+   },
+   {
+    "parent": "WFH Reports",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR User"
+   },
+   {
+    "parent": "WFH Reports",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   },
+   {
+    "parent": "WFH Reports",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Report Manager"
+   },
+   {
+    "parent": "WFH Reports",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "WFH Approver"
+   }
+  ],
+  "timeout": 0
+ }
+]

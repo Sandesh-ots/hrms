@@ -1,0 +1,130 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-05-13 10:12:38.401807",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_newl",
+  "user",
+  "total_wfh_days_taken",
+  "from_date",
+  "to_date",
+  "reporting_manager",
+  "tasks",
+  "url",
+  "work_completed",
+  "comments"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_newl",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "User",
+   "options": "User",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "total_wfh_days_taken",
+   "fieldtype": "Int",
+   "label": "Total WFH Days Taken",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "from_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "From Date",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "to_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "To Date",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "reporting_manager",
+   "fieldtype": "Link",
+   "ignore_user_permissions": 1,
+   "label": "Reporting Manager",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "tasks",
+   "fieldtype": "Small Text",
+   "label": "Tasks",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "url",
+   "fieldtype": "Data",
+   "label": "URL",
+   "length": 1000,
+   "read_only": 1
+  },
+  {
+   "fieldname": "work_completed",
+   "fieldtype": "Percent",
+   "in_list_view": 1,
+   "label": "Work Completed (%)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "comments",
+   "fieldtype": "Data",
+   "label": "Comments"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-07-16 16:47:00.847926",
+ "modified_by": "Administrator",
+ "module": "HR",
+ "name": "Work From Home Remarks",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "HR Manager",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

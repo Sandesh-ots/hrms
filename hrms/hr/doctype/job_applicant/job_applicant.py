@@ -49,6 +49,27 @@ class JobApplicant(Document):
 					_("Cannot create a Job Applicant against a closed Job Opening"), title=_("Not Allowed")
 				)
 
+	def after_insert(self):
+		subject = f"Job Application submitted by {self.applicant_name}"
+		message = f"""
+		Dear HR,<br><br>
+		A new job application submitted.<br><br>
+        
+        <b>Application Details:</b><br>
+        <b>Name:</b> {self.applicant_name}<br>
+        <b>Email:</b> {self.email_id}<br>
+        <b>Position Applied:</b> {self.designation}<br><br>
+        
+        Please log in to the system to view and take necessary action.<br><br>
+
+		"""
+
+		frappe.sendmail(
+			recipients = "meena.bhatia@ortusolis.com",
+			subject=subject,
+			message=message
+			)
+
 	def set_status_for_employee_referral(self):
 		emp_ref = frappe.get_doc("Employee Referral", self.employee_referral)
 		if self.status in ["Open", "Replied", "Hold"]:
@@ -118,3 +139,19 @@ def get_applicant_to_hire_percentage():
 		"value": flt(total_hired) / flt(total_applicants) * 100 if total_applicants else 0,
 		"fieldtype": "Percent",
 	}
+
+@frappe.whitelist()
+def send_internship_details(job_applicant, data):
+    doc = frappe.get_doc("Job Applicant", job_applicant)
+
+    html_template = f"""
+    <p>{data.replace('\n', '<br>')}</p>
+    """
+
+    frappe.sendmail(
+        recipients=[doc.email_id],
+        subject="Internship Details",
+        message=html_template,
+        delayed=False
+    )
+

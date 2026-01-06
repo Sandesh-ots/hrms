@@ -7,6 +7,9 @@ frappe.ui.form.on("Employee Performance Feedback", {
 	},
 
 	refresh(frm) {
+    	if (frappe.session.user != frm.doc.user && frappe.session.user != "Administrator"){
+			frm.disable_form();
+		}
 		frm.trigger("set_filters");
 	},
 

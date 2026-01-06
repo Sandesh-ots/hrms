@@ -6,8 +6,8 @@ import frappe
 from frappe import _
 from frappe.model.document import Document
 from frappe.query_builder.functions import Avg
-from frappe.utils import flt, get_link_to_form, getdate
-
+from frappe.utils import cint, cstr, get_datetime, get_link_to_form, getdate, nowtime, flt
+import urllib.parse
 
 class InterviewFeedback(Document):
 	def validate(self):
@@ -18,6 +18,27 @@ class InterviewFeedback(Document):
 
 	def on_submit(self):
 		self.update_interview_average_rating()
+		encoded_name = urllib.parse.quote(self.job_applicant)
+		subject = f"Interview Feedback - {self.interview_round}"
+		message = f"""
+		Dear HR,<br><br>
+        
+        Please take a look at Interview Feedback:<br><br>
+        
+        <b>Interview Feedback:</b><br>
+        <b>Interviewer:</b> {self.interviewer}<br>
+        <b>Candidate Name:</b> {self.job_applicant}<br>
+        <b>Interview Id:</b> {self.interview}<br><br>
+
+        <a href="{frappe.utils.get_url()}/app/interview/{self.interview}">Click here to view the Interview Application</a><br><br>
+        
+		"""
+
+		frappe.sendmail(
+			recipients = "meena.bhatia@ortusolis.com",
+			subject = subject,
+			message = message
+			)
 
 	def on_cancel(self):
 		self.update_interview_average_rating()

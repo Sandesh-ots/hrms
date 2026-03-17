@@ -253,12 +253,10 @@
    "label": "Publish Applications Received"
   },
   {
-<<<<<<< Updated upstream
    "fieldname": "job_opening_template",
    "fieldtype": "Link",
    "label": "Job Opening Template",
    "options": "Job Opening Template"
-=======
    "fieldname": "section_break_abib",
    "fieldtype": "Section Break"
   },
@@ -267,7 +265,6 @@
    "fieldtype": "Table",
    "label": "Required Skills",
    "options": "Skills Required"
->>>>>>> Stashed changes
   }
  ],
  "has_web_view": 1,
@@ -275,11 +272,8 @@
  "idx": 1,
  "is_published_field": "publish",
  "links": [],
-<<<<<<< Updated upstream
  "modified": "2025-12-11 19:18:36.145062",
-=======
  "modified": "2025-11-12 11:01:30.430216",
->>>>>>> Stashed changes
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Job Opening",
@@ -299,11 +293,8 @@
   }
  ],
  "row_format": "Dynamic",
-<<<<<<< Updated upstream
  "sort_field": "creation",
-=======
  "sort_field": "modified",
->>>>>>> Stashed changes
  "sort_order": "ASC",
  "states": [
   {
